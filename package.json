@@ -1,0 +1,19 @@
+{
+  "name": "bada-on-ras",
+  "version": "1.0.0",
+  "description": "Raspberry 3 for BaDa IOTs KZ",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "iot"
+  ],
+  "author": "Diep Nguyen",
+  "license": "ISC",
+  "dependencies": {
+    "firebase": "^4.8.0",
+    "firmata": "^0.19.1",
+    "serialport": "^6.0.4"
+  }
+}
