@@ -51,6 +51,10 @@ var unoReady = false;
 SerialPort.list(function(error_serial, result) {
   if(error_serial) return console.log('Error get list ports: ', err.message);
   console.log('Running: get list ports...');
+  if(result.length<1) {
+	  console.log('No device connect...');
+	  process.exit();
+  }
   var ports = result.filter(function(val) {
 	var available = true;
 	// ttyUSB#, cu.usbmodem#, COM#
