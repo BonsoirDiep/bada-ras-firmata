@@ -76,7 +76,13 @@ SerialPort.list(function(error_serial, result) {
 	actionHere();
 	setInterval(function(){
 		removeAnalogs.forEach(e=>{
-			board.reportAnalogPin(ePin[e], 0);
+			try{
+				board.reportAnalogPin(ePin[e], 0);
+				console.log(ePin[e]);
+			}
+			catch (err){
+				console.log(err.message);
+			}
 			var hack = removeAnalogs.indexOf(e);
 			if(hack>=0){
 				removeAnalogs.splice(hack,1);
