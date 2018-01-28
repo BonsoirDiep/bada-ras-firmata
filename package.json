@@ -1,7 +1,7 @@
 {
-  "name": "bada-on-ras",
+  "name": "bada-ras-firmata",
   "version": "1.0.0",
-  "description": "Raspberry 3 for BaDa IOTs KZ",
+  "description": "Raspberry and Firmata for BaDa Iots KZ",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
