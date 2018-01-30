@@ -47,13 +47,13 @@ var reportAnalogs = {
 var removeSensors = [];
 
 var unoReady = false;
-
+var poll = function(){
 SerialPort.list(function(error_serial, result) {
   if(error_serial) return console.log('Error get list ports: ', err.message);
   console.log('Running: get list ports...');
   if(result.length<1) {
 	  console.log('No device connect...');
-	  process.exit();
+	  return setTimeout(poll, 3000);
   }
   var ports = result.filter(function(val) {
 	var available = true;
@@ -70,15 +70,32 @@ SerialPort.list(function(error_serial, result) {
   console.log(result);
   console.log('###########');
   board = new Board(ports[0], {samplingInterval: 1200});
-
+  
+  board.on("close", function () {
+	console.log('~~~~~~~~~~~~~~~');
+	console.log('Board closed');
+	console.log('~~~~~~~~~~~~~~~');
+	if(board.myInterval){
+		clearInterval(board.myInterval);
+		unoReady = false;
+		a.off();
+		board.myInterval = null;
+		return setTimeout(function(){
+			removeSensors = [];
+			listSensors = [];
+			listOnes = [];
+			listLights = [];
+			listAnalogs = [];
+			poll();
+		}, 3000);
+	}
+  });
+  
   board.on("ready", function() {
-    // board.pinMode(13, board.MODES.OUTPUT);
-	// board.digitalWrite(13, 1); // state^=1
-	//console.log(board.analogPins);
     unoReady = true;
 	console.log('READY!!!');
 	actionHere();
-	setInterval(function(){
+	board.myInterval = setInterval(function(){
 		removeSensors.forEach(e=>{
 			/*try{
 				console.log(ePin[e]);
@@ -101,8 +118,8 @@ SerialPort.list(function(error_serial, result) {
 				board.analogRead(ePin[e],()=>{});
 			} else{
 				var data = board.pins[board.analogPins[ePin[e]]].value;
-				var a = parseFloat(data);
-				var mV = a * 5.0 * 1000 / 1023.0;
+				var aTmp = parseFloat(data);
+				var mV = aTmp * 5.0 * 1000 / 1023.0;
 				var tmpC = Math.round(mV / 10);
 				var json ={};
 				json['node'+e] = tmpC;
@@ -134,10 +151,10 @@ SerialPort.list(function(error_serial, result) {
 					}
 					var raw = (data[1] << 8) | data[0];
 					var celsius = raw / 16.0;
-					var a = parseFloat(celsius);
-					if(!isNaN(a) && a>0){
+					var aTmp = parseFloat(celsius);
+					if(!isNaN(aTmp) && aTmp>0){
 						var json ={};
-						json['node'+e] = a;
+						json['node'+e] = aTmp;
 						console.log(json);
 						db.ref("product/"+productKey+"/sens").update(json);
 					}
@@ -147,6 +164,7 @@ SerialPort.list(function(error_serial, result) {
 	}, 1200);
   });
 });
+}
 
 function fcOnOff(pin, val){
     if(!unoReady) return;
@@ -287,3 +305,5 @@ a.on("child_changed", function(snapshot, prevChildKey) {
     }
 });
 }
+
+poll();
