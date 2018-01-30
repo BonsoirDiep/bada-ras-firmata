@@ -21,10 +21,10 @@ var app = firebase.initializeApp({
 var db = firebase.database();
 var a = db.ref('product/'+productKey+'/kit');
 var delayMs = 2000;
-var listSensors = []; // update each delayMs ms
-var listOnes = []; // update each delayMs ms
-var listLights = []; // listen data event
-var listAnalogs = []; // listen data event
+var listSensors = []; // update each delayMs ms "ai"
+var listOnes = []; // update each delayMs ms "1wire"
+var listLights = []; // listen data event "do"
+var listAnalogs = []; // listen data event "ao"
 /**
  * analog Design Firmata
  */
@@ -44,7 +44,7 @@ var reportAnalogs = {
 	'18': 0,
 	'19': 0
 }
-var removeAnalogs = [];
+var removeSensors = [];
 
 var unoReady = false;
 
@@ -79,17 +79,18 @@ SerialPort.list(function(error_serial, result) {
 	console.log('READY!!!');
 	actionHere();
 	setInterval(function(){
-		removeAnalogs.forEach(e=>{
-			try{
-				board.reportAnalogPin(ePin[e], 0);
+		removeSensors.forEach(e=>{
+			/*try{
 				console.log(ePin[e]);
+				board.reportAnalogPin(ePin[e], 0);
 			}
 			catch (err){
 				console.log(err.message);
-			}
-			var hack = removeAnalogs.indexOf(e);
+			}*/
+			board.reportAnalogPin(ePin[e], 0);
+			var hack = removeSensors.indexOf(e);
 			if(hack>=0){
-				removeAnalogs.splice(hack,1);
+				removeSensors.splice(hack,1);
 				reportAnalogs[e] = 0;
 			}
 		});
@@ -242,7 +243,6 @@ a.on("child_removed", function(snapshot, prevChildKey) {
             if(e) {
 				var hack = listAnalogs.indexOf('node'+e);
 				if(hack>=0) listAnalogs.splice(hack,1);
-				if(removeAnalogs.indexOf(e)<0) removeAnalogs.push(e);
 			}
         })
     } else if(b == 'sens'){
@@ -250,6 +250,7 @@ a.on("child_removed", function(snapshot, prevChildKey) {
             if(e){
 				var hack = listSensors.indexOf(e);
 				if(hack>=0) listSensors.splice(hack,1);
+				if(removeSensors.indexOf(e)<0) removeSensors.push(e);
 			}
         })
     } else if(b == 'one'){
