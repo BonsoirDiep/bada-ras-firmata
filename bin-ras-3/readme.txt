@@ -10,7 +10,7 @@ bash: strings /usr/lib/arm-linux-gnueabihf/libstdc++.so.6 | grep GLIBCXX
 Replace "serialport.node" with "serialport.node.other/serialport.node"
 Read "serialport.txt" -> about OS
 
-### FIX AGAIN ##
+### FIX BY YOUR HAND ##
 bash: curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
 bash: sudo apt-get install -y nodejs
 bash: cd <any_folder>
