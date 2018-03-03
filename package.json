@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Raspberry and Firmata for BaDa Iots KZ",
   "main": "index.js",
+  "bin": "index.js",
   "scripts": {
     "start": "node index.js",
 	"test": "node test.js"

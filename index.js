@@ -4,7 +4,27 @@ var SerialPort = require('serialport');
 var Board = require("firmata");
 var board; // main control
 
-var config = require("./config.json");
+//var config = require("./config.json");
+var config = {};
+try{
+	config = JSON.parse(require('fs').readFileSync('config.json', 'utf8'));
+}
+catch(ex){
+	config = {err: ex.message};
+}
+if(config.err){
+	console.log('Need file \'config.json\'');
+	process.exit();
+} else if(config.demoKey) {
+	console.log('You are using demo..');
+	console.log('Want more, need \'productKey\'');
+} else if (config.productKey){
+	console.log('Congratulations \'productKey\' OK ..');
+} else {
+	console.log('File \'config.json\' invalid');
+	process.exit();
+}
+
 var productKey = config.productKey; // note: 'hFrPLqQKIbmU' is demo product key
 if(!productKey) productKey = config.demoKey;
 /**
@@ -55,6 +75,7 @@ SerialPort.list(function(error_serial, result) {
 	  console.log('No device connect...');
 	  return setTimeout(poll, 3000);
   }
+  var haha;
   var ports = result.filter(function(val) {
 	var available = true;
 	// ttyUSB#, cu.usbmodem#, COM#
@@ -62,12 +83,20 @@ SerialPort.list(function(error_serial, result) {
 	if (!rport.test(val.comName)) {
 		available = false;
 	}
+	if(!val.pnpId){
+		available = false;
+	}
 	return available;
   }).map(function(val) {
+	 haha = val;
 	return val.comName;
   });
+  if(ports.length == 0){
+	console.log('Device connect invalid...');
+	return setTimeout(poll, 3000);
+  }
   console.log('###########');
-  console.log(result);
+  console.log(haha);
   console.log('###########');
   board = new Board(ports[0], {samplingInterval: 1200});
   
