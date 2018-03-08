@@ -6,8 +6,8 @@ Connect Raspberry Pi3 to Arduino Uno via serial port
 	
 Control and monitoring
 ```text
-	index.js                     -> badaiots-kz.herokuapp.com/nguoidung/theodoi.html
-	index2.js (is not ready yet) -> badaiots-kz.herokuapp.com/nguoidung/theodoi2.html
+	index.js(with command: npm start) -> badaiots-kz.herokuapp.com/nguoidung/theodoi.html
+	index2.js(is not ready yet)       -> badaiots-kz.herokuapp.com/nguoidung/theodoi2.html
 ```
 
 On Raspberry Pi 3, run:
