@@ -16,12 +16,13 @@ On Raspberry Pi 3, run:
   npm install
   ```
 
-In "config.json": You need "productKey" - *if not want to be limited by the demo*
+"productKey" [here](https://badaiots-kz.herokuapp.com/huongdan)
+In "config.json": You need "productKey"
 ```bash
   npm start
 ```
 ***
-Design [here](https://badaiots-kz.herokuapp.com/nguoidung/thietke.html) (You need "productKey" signup and request productKey (can send mail to: thandieu13@gmail.com))
+Design [here](https://badaiots-kz.herokuapp.com/thietke)
 
 Note:
 ```text
