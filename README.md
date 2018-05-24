@@ -6,7 +6,7 @@ Connect Raspberry Pi3 to Arduino Uno via serial port
 	
 Control and monitoring
 ```text
-	-> badaiots-kz.herokuapp.com/nguoidung/theodoi.html
+   -> badaiots-kz.herokuapp.com/nguoidung/theodoi
 ```
 
 On Raspberry Pi 3, run:
