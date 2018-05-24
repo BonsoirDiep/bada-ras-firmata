@@ -16,9 +16,7 @@ On Raspberry Pi 3, run:
   npm install
   ```
 
-"productKey" [here](https://badaiots-kz.herokuapp.com/huongdan)
-
-In "config.json": You need "productKey"
+In "config.json": You need "productKey" ("productKey" [here](https://badaiots-kz.herokuapp.com/huongdan))
 ```bash
   npm start
 ```
