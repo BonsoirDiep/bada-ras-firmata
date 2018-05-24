@@ -17,6 +17,7 @@ On Raspberry Pi 3, run:
   ```
 
 "productKey" [here](https://badaiots-kz.herokuapp.com/huongdan)
+
 In "config.json": You need "productKey"
 ```bash
   npm start
